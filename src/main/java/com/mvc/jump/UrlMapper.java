@@ -1,5 +1,6 @@
 package com.mvc.jump;
 
+import com.google.common.base.Objects;
 import com.google.common.base.Predicate;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableList;
@@ -27,16 +28,17 @@ public class UrlMapper {
         for (Method method : urlMappingMethods) {
             URLMapping urlMappingAnnotation = method.getDeclaredAnnotation(URLMapping.class);
             String url = urlMappingAnnotation.url();
-            URLMatcher urlMatcher = new URLMatcher(url);
+            String httpMethod = urlMappingAnnotation.method();
+            URLMatcher urlMatcher = new URLMatcher(url, httpMethod);
             methods.put(urlMatcher, new MethodWrapper(urlMatcher, method, host));
         }
     }
 
-    public MethodWrapper findMethod(final String url) throws NoSuchMethodException {
+    public MethodWrapper findMethod(final String url, final String method) {
         URLMatcher matcher = FluentIterable.from(methods.keySet()).firstMatch(new Predicate<URLMatcher>() {
             @Override
             public boolean apply(URLMatcher input) {
-                return input.match(url);
+                return input.match(url, method);
             }
         }).orNull();
 

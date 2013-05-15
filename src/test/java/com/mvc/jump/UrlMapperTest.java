@@ -17,7 +17,7 @@ public class UrlMapperTest {
         String url = "/hello";
 
         // when
-        MethodWrapper method = mapper.findMethod(url);
+        MethodWrapper method = mapper.findMethod(url, "GET");
 
         // then
         assertThat(method, notNullValue());

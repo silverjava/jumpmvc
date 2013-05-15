@@ -12,12 +12,12 @@ public class URLMatcherTest {
     public void should_match_regex_pattern_for_url() throws Exception {
         // given
         String urlPattern = "/hello/$1";
-        URLMatcher matcher = new URLMatcher(urlPattern);
+        URLMatcher matcher = new URLMatcher(urlPattern, "GET");
 
         String realUrl = "/hello/david";
 
         // when
-        boolean isMatch = matcher.match(realUrl);
+        boolean isMatch = matcher.match(realUrl, "GET");
 
         // then
         assertThat(isMatch, is(true));
@@ -27,12 +27,12 @@ public class URLMatcherTest {
     public void should_not_match_for_wrong_url() throws Exception {
         // given
         String urlPattern = "/hello/$1";
-        URLMatcher matcher = new URLMatcher(urlPattern);
+        URLMatcher matcher = new URLMatcher(urlPattern, "GET");
 
         String realUrl = "/hello";
 
         // when
-        boolean isMatch = matcher.match(realUrl);
+        boolean isMatch = matcher.match(realUrl, "GET");
 
         // then
         assertThat(isMatch, is(false));
@@ -42,12 +42,12 @@ public class URLMatcherTest {
     public void should_be_matched_for_same_url() throws Exception {
         // given
         String urlPattern = "/hello";
-        URLMatcher matcher = new URLMatcher(urlPattern);
+        URLMatcher matcher = new URLMatcher(urlPattern, "GET");
 
         String realUrl = "/hello";
 
         // when
-        boolean isMatch = matcher.match(realUrl);
+        boolean isMatch = matcher.match(realUrl, "GET");
 
         // then
         assertThat(isMatch, is(true));
@@ -57,12 +57,12 @@ public class URLMatcherTest {
     public void should_get_parameters_for_the_url() throws Exception {
         // given
         String urlPattern = "/hello/$1";
-        URLMatcher matcher = new URLMatcher(urlPattern);
+        URLMatcher matcher = new URLMatcher(urlPattern, "GET");
 
         String realUrl = "/hello/david";
 
         // when
-        boolean isMatch = matcher.match(realUrl);
+        boolean isMatch = matcher.match(realUrl, "GET");
         String[] params = matcher.getParams(realUrl);
 
         // then
@@ -76,12 +76,12 @@ public class URLMatcherTest {
     public void should_be_matched_for_more_than_one_params() throws Exception {
         // given
         String urlPattern = "/hello/$1/$2";
-        URLMatcher matcher = new URLMatcher(urlPattern);
+        URLMatcher matcher = new URLMatcher(urlPattern, "GET");
 
         String realUrl = "/hello/david/john";
 
         // when
-        boolean isMatch = matcher.match(realUrl);
+        boolean isMatch = matcher.match(realUrl, "GET");
         String[] params = matcher.getParams(realUrl);
 
         // then

@@ -1,5 +1,7 @@
 package com.mvc.jump;
 
+import com.google.common.base.Objects;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -7,23 +9,27 @@ public class URLMatcher {
     private static final String PARAM_REGEX = "\\$(\\d+)";
     private Pattern targetPattern;
     private String originalUrl;
+    private String httpMethod;
 
     public URLMatcher(String urlPattern) {
         this.originalUrl = urlPattern;
         genUrlPattern();
     }
 
+    public URLMatcher(String url, String httpMethod) {
+        this(url);
+        this.httpMethod = httpMethod;
+    }
+
     private void genUrlPattern() {
-        String url = originalUrl;
         Pattern pattern = Pattern.compile(PARAM_REGEX);
-        Matcher matcher = pattern.matcher(url);
+        Matcher matcher = pattern.matcher(originalUrl);
         targetPattern = Pattern.compile(matcher.replaceAll("(.+)"));
     }
 
-    public boolean match(String realUrl) {
-        return targetPattern.matcher(realUrl).matches();
+    public boolean match(String realUrl, String method) {
+        return targetPattern.matcher(realUrl).matches() && Objects.equal(method, httpMethod);
     }
-
 
     public String[] getParams(String realUrl) {
         Matcher matcher = targetPattern.matcher(realUrl);

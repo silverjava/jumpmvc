@@ -1,10 +1,6 @@
 package com.mvc.jump;
 
-import com.google.common.base.Function;
-import com.google.common.collect.FluentIterable;
-
 import java.lang.reflect.Method;
-import java.util.Arrays;
 
 public class MethodWrapper {
     private Method method;

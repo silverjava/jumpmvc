@@ -28,19 +28,14 @@ public class DispatcherServlet extends HttpServlet {
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        try {
-            MethodWrapper method = urlMapper.findMethod(req.getServletPath());
-            logger.info("get method: " + method);
+            MethodWrapper method = urlMapper.findMethod(req.getServletPath(), req.getMethod());
+            System.out.println(method);
             if (method != null) {
                 RenderWrapper renderWrapper = method.invoke(req.getServletPath());
                 renderWrapper.render(getServletContext(), req, resp);
-                logger.info("Rendered for path: " + req.getPathInfo());
             } else {
                 StaticFileManager staticFileManager = new StaticFileManager();
                 staticFileManager.sendFile(getServletContext(), req, resp);
             }
-        } catch (Exception e) {
-            resp.sendError(403);
-        }
     }
 }

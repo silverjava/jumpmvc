@@ -11,15 +11,15 @@ public class RenderWrapper {
         this.content = content;
     }
 
-    public String getRenderingContent() {
-        return content.toString();
-    }
-
-    public void render(ServletContext servletContext, HttpServletRequest req, HttpServletResponse resp) throws Exception {
+    public void render(ServletContext servletContext, HttpServletRequest req, HttpServletResponse resp) {
         if (content instanceof RenderTemplate) {
             RenderTemplate template = (RenderTemplate) content;
             template.setRealPath(servletContext.getRealPath("/"));
-            template.render(req, resp);
+            try {
+                template.render(req, resp);
+            } catch (Exception e) {
+                throw new IllegalStateException("Can't render the page.");
+            }
         }
     }
 }
