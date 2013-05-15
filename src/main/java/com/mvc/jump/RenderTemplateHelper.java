@@ -1,6 +1,11 @@
 package com.mvc.jump;
 
 public class RenderTemplateHelper {
+
+    public static RenderTemplate freemarker(String path) {
+        return freemarker(path, null);
+    }
+
     public static RenderTemplate freemarker(String path, Object model) {
         return new FreeMarkerTemplate(path, model);
     }

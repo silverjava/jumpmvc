@@ -11,7 +11,7 @@ public class HelloAction {
 
     @URLMapping(url = "/hello")
     public RenderTemplate hello() {
-        return freemarker("/jsp/hello.ftl", null);
+        return freemarker("/jsp/hello.ftl");
     }
 
     @URLMapping(url = "/hellojsp")
@@ -32,5 +32,15 @@ public class HelloAction {
         model.put("name1", name1);
         model.put("name2", name2);
         return freemarker("/jsp/hellops.ftl", model);
+    }
+
+    @URLMapping(url = "/signin")
+    public RenderTemplate signin() {
+        return freemarker("/jsp/signin.ftl");
+    }
+
+    @URLMapping(url = "/signin", method = "POST")
+    public RenderTemplate signinDone(SignForm form) {
+        return freemarker("/jsp/success.ftl");
     }
 }
