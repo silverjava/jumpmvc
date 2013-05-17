@@ -3,10 +3,14 @@ package com.mvc.example;
 public class SignForm {
     private String email;
     private String password;
+    private FullName fullName;
 
-    public SignForm(String email, String password) {
-        this.email = email;
-        this.password = password;
+    public FullName getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(FullName fullName) {
+        this.fullName = fullName;
     }
 
     public String getEmail() {

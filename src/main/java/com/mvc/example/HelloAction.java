@@ -40,7 +40,9 @@ public class HelloAction {
     }
 
     @URLMapping(url = "/signin", method = "POST")
-    public RenderTemplate signinDone() {
-        return freemarker("/jsp/success.ftl");
+    public RenderTemplate signinDone(@RequestParam("form") SignForm form) {
+        Map<String, Object> model = newHashMap();
+        model.put("form", form);
+        return freemarker("/jsp/success.ftl", model);
     }
 }

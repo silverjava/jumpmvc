@@ -17,6 +17,18 @@
 
 <form class="form-horizontal" action="./signin" method="post">
     <div class="control-group">
+        <label class="control-label" for="inputEmail">First Name</label>
+        <div class="controls">
+            <input type="text" name="form.fullName.firstName" placeholder="FirstName">
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="inputEmail">Last Name</label>
+        <div class="controls">
+            <input type="text" name="form.fullName.lastName" placeholder="LastName">
+        </div>
+    </div>
+    <div class="control-group">
         <label class="control-label" for="inputEmail">Email</label>
         <div class="controls">
             <input type="text" name="form.email" placeholder="Email">

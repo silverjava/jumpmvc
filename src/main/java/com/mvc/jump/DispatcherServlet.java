@@ -7,10 +7,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 public class DispatcherServlet extends HttpServlet {
-    private static final Logger logger = Logger.getLogger(DispatcherServlet.class.getName());
     private JumpContainer jumpContainer;
     private UrlMapper urlMapper;
 
@@ -28,14 +28,23 @@ public class DispatcherServlet extends HttpServlet {
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-            MethodWrapper method = urlMapper.findMethod(req.getServletPath(), req.getMethod());
-            System.out.println(method);
-            if (method != null) {
-                RenderWrapper renderWrapper = method.invoke(req.getServletPath());
-                renderWrapper.render(getServletContext(), req, resp);
-            } else {
-                StaticFileManager staticFileManager = new StaticFileManager();
-                staticFileManager.sendFile(getServletContext(), req, resp);
+        MethodWrapper method = urlMapper.findMethod(req.getServletPath(), req.getMethod());
+        if (method != null) {
+            RenderWrapper renderWrapper = null;
+            if (req.getMethod().toUpperCase().equals("GET")) {
+                renderWrapper = method.invoke(req.getServletPath());
             }
+
+            if (req.getMethod().equals("POST")) {
+                renderWrapper = method.invoke(req.getParameterMap());
+            }
+
+            if (renderWrapper != null) {
+                renderWrapper.render(getServletContext(), req, resp);
+            }
+        } else {
+            StaticFileManager staticFileManager = new StaticFileManager();
+            staticFileManager.sendFile(getServletContext(), req, resp);
+        }
     }
 }

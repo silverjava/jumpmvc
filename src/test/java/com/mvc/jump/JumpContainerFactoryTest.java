@@ -15,7 +15,7 @@ public class JumpContainerFactoryTest {
     public void testName() throws Exception {
         ServletConfig servletConfig = mock(ServletConfig.class);
         given(servletConfig.getInitParameter("ContainerType")).willReturn("Guice");
-        given(servletConfig.getInitParameter("ModulePath")).willReturn("com.mvc.example.ModuleConfig");
+        given(servletConfig.getInitParameter("ModulePath")).willReturn("com.mvc.example.GuiceConfig");
 
         Config config = new Config(servletConfig);
 

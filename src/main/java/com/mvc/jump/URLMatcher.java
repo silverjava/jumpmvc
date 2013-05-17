@@ -25,6 +25,7 @@ public class URLMatcher {
         Pattern pattern = Pattern.compile(PARAM_REGEX);
         Matcher matcher = pattern.matcher(originalUrl);
         targetPattern = Pattern.compile(matcher.replaceAll("(.+)"));
+        // /hello/$1  => /hello/(.+)
     }
 
     public boolean match(String realUrl, String method) {

@@ -20,6 +20,8 @@ public class RenderWrapper {
             } catch (Exception e) {
                 throw new IllegalStateException("Can't render the page.");
             }
+        } else {
+            // primitives stuff
         }
     }
 }
